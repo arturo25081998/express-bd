@@ -15,16 +15,20 @@ const mentorSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    require: true,
+    required: true,
     match: RegExp(".*@.*..*"),
   },
   age: {
     type: Number,
-    require: true,
+    required: true,
     min: 18,
+  },
+  createAt: {
+    type: Date,
+    default: new Date(),
   },
 });
 
 // Mongoose model : For the model we need the collection's name and the schema
 
-module.exports = mongoose.model("mentor", mentorSchema);
+module.exports = mongoose.model("mentors", mentorSchema);

@@ -2,6 +2,13 @@ const Mentor = require("../models/mentors.model");
 const createError = require("http-errors");
 
 async function create(data) {
+  //Method find returns an array
+  //Method findOne return the first one as an object
+  const existingMentor = await Mentor.findOne({ email: data.email });
+
+  if (existingMentor) {
+    throw createError(409, "Email alredy used");
+  }
   const newMentor = await Mentor.create(data);
   return newMentor;
 }
