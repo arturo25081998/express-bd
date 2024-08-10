@@ -2,8 +2,9 @@ const express = require("express");
 const mentorsUseCase = require("../usecases/mentor.usecases");
 const createError = require("http-errors");
 const router = express.Router();
+const auth = require("../middlewares/auth");
 
-router.get("/", async (request, response) => {
+router.get("/", auth, async (request, response) => {
   try {
     const mentors = await mentorsUseCase.getAll();
     response.json({
@@ -20,7 +21,7 @@ router.get("/", async (request, response) => {
   }
 });
 
-router.get("/:id", async (request, response) => {
+router.get("/:id", auth, async (request, response) => {
   try {
     const id = request.params.id;
     const mentor = await mentorsUseCase.getById(id);
@@ -41,7 +42,7 @@ router.get("/:id", async (request, response) => {
   }
 });
 
-router.post("/", async (request, response) => {
+router.post("/", auth, async (request, response) => {
   try {
     const mentorData = request.body;
     const newMentor = await mentorsUseCase.create(mentorData);
@@ -59,7 +60,7 @@ router.post("/", async (request, response) => {
   }
 });
 
-router.patch("/:id", async (request, response) => {
+router.patch("/:id", auth, async (request, response) => {
   try {
     const id = request.params.id;
     const mentorData = request.body;
@@ -78,7 +79,7 @@ router.patch("/:id", async (request, response) => {
   }
 });
 
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", auth, async (request, response) => {
   try {
     const id = request.params.id;
     const mentor = await mentorsUseCase.deleteById(id);
